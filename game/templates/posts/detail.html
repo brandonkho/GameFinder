@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+	<div class="post-detail">
+		<h1>{{post.title}}</h1>
+    {% for j in post.joined_users.all %}
+      <p>{{ j }} has joined this game</p>
+    {% endfor %}
+    <a class="btn btn-primary" href='{% url "add" post.id %}' role="button">Join</a>
+	</div>
+</div>
+
+<div id="map"></div>
+    <script>
+      var map;
+      function initMap() {
+        var coordinates = {lat: {{latitude}}, lng: {{longitude}}}
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: coordinates,
+          zoom: 13
+        });
+
+        var marker = new google.maps.Marker({
+        position: coordinates,
+        map: map,
+        title: 'Hello World!'
+        });
+        var infowindow = new google.maps.InfoWindow({
+          content: 'ayo'
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+  
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtk_0eRJb6aXELbxPMp5yIrMJFjI_eJko&callback=initMap"
+    async defer></script>
+
+{% endblock %}
+
