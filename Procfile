@@ -1,1 +1,1 @@
-web: gunicorn game.wsgi --log-file -
+web: gunicorn game.wsgi -b 0.0.0.0:$PORT
