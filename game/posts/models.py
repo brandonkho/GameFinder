@@ -21,8 +21,8 @@ class Post(models.Model):
     sport = models.CharField(max_length=20, choices=SPORT_CHOICES)
     description = models.TextField(null=True, blank=True)
     location = models.CharField(max_length=100)
+    city = models.CharField(max_length=50, null=True)
     capacity = models.IntegerField(default=10)
-    num_players = models.IntegerField(default=0)
     time = models.TimeField(default=datetime.time(12, 00))
     created_date = models.DateTimeField(default=timezone.now)
     joined_users = models.ManyToManyField(User)
@@ -38,4 +38,9 @@ class Post(models.Model):
         'frisbee': 'images/frisbee.png'}
         icon_url = sports.get(self.sport)
         return icon_url
+
+    def get_num_players(self):
+        users = self.joined_users.all()
+        num_players = len(users)+1
+        return num_players
 

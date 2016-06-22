@@ -38,13 +38,13 @@ def detail(request, post_id):
 
     location_str = post.location
     address= location_str.replace(' ', '+')
-    url="https://maps.googleapis.com/maps/api/geocode/json?address=%s" % address
+    city = post.city.replace(' ', '+')
+    url="https://maps.googleapis.com/maps/api/geocode/json?address=%s+%s" % (address, city)
     response = urllib.request.urlopen(url)
     jsongeocode = response.read().decode('utf-8')
     jsongeocode = json.loads(jsongeocode)
     latitude = jsongeocode['results'][0]['geometry']['location']['lat']
     longitude = jsongeocode['results'][0]['geometry']['location']['lng']
-
 
 
     context = {'post': post, 'latitude': latitude, 'longitude': longitude}

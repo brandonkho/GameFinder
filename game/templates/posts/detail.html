@@ -9,7 +9,13 @@
     {% for j in post.joined_users.all %}
       <p>{{ j }} has joined this game</p>
     {% endfor %}
-    <a class="btn btn-primary" href='{% url "add" post.id %}' role="button">Join</a>
+    {% if post.get_num_players >= post.capacity  %}
+      <p>This game is now full</p>
+      <a class="btn btn-primary" href='{% url "add" post.id %}' role="button" disabled>Join</a>
+    {% else %}
+      <a class="btn btn-primary" href='{% url "add" post.id %}' role="button">Join</a>
+    {% endif %}
+    
 	</div>
 </div>
 
