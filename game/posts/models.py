@@ -46,3 +46,11 @@ class Post(models.Model):
         num_players = len(users)+1
         return num_players
 
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments')
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.text
+    
