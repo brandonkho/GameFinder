@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.core.urlresolvers import reverse
@@ -17,6 +18,7 @@ SPORT_CHOICES = (
 )
 
 class Post(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, related_name='creator')
     title = models.CharField(max_length=200)
     sport = models.CharField(max_length=20, choices=SPORT_CHOICES)
     description = models.TextField(null=True, blank=True)

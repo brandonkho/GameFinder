@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 
@@ -46,8 +46,10 @@ def detail(request, post_id):
     latitude = jsongeocode['results'][0]['geometry']['location']['lat']
     longitude = jsongeocode['results'][0]['geometry']['location']['lng']
 
+    user = request.user
 
-    context = {'post': post, 'latitude': latitude, 'longitude': longitude}
+
+    context = {'post': post, 'latitude': latitude, 'longitude': longitude, 'user': user}
     return render(request, template, context)
     #return HttpResponse("Youre %s" % post_id)
 
@@ -59,6 +61,7 @@ def create(request):
 
         if form.is_valid():
             post = form.save(commit=False)
+            post.user = request.user
             post.save()
             url = reverse('index')
             return HttpResponseRedirect(url)
@@ -71,6 +74,11 @@ def create(request):
     template = 'posts/new.html'
     return render(request, template, context)
     #return HttpResponse("Make new Post")
+
+def remove(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    post.delete()
+    return redirect('index')
 
 
 

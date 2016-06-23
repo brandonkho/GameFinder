@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^posts/', include('posts.urls')),
     url(r'^create/$', 'posts.views.create', name='create'),
+    url(r'^remove/(?P<post_id>[0-9]+)/$', 'posts.views.remove', name='remove'),
     url(r'^login/$', 'accounts.views.login_view', name='login'),
     url(r'^logout/$', 'accounts.views.logout_view', name='logout'),
     url(r'^register/$', 'accounts.views.register_view', name='register'),

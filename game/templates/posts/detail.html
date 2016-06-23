@@ -15,6 +15,10 @@
     {% else %}
       <a class="btn btn-primary" href='{% url "add" post.id %}' role="button">Join</a>
     {% endif %}
+
+    {% if post.user == user %}
+    <a class="btn btn-primary" href='{% url "remove" post.id %}' role="button">Delete</a>
+    {% endif %}
     
 	</div>
 </div>
